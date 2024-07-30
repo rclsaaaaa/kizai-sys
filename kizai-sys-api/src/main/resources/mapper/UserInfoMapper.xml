@@ -32,5 +32,22 @@
         where
         	employee_id = #{userId}
 	</select>
+	
+	<insert id="insertUserInfo">
+		insert into user_info(
+			employee_id,
+			employee_name,
+			employee_address,
+			employee_department,
+			employee_pj
+		)
+		values(
+			#{employeeId},
+			#{employeeName},
+			#{employeeAddress},
+			#{employeeDepartment},
+			#{employeePj}
+		)
+	</insert>
 
 </mapper> 

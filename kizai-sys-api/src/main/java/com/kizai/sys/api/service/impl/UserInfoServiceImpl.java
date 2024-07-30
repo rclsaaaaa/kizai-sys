@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kizai.sys.api.model.entity.UserInfo;
 import com.kizai.sys.api.model.entity.UserInfoList;
+import com.kizai.sys.api.model.requestBody.UserInfoRequestBody;
 import com.kizai.sys.api.repository.UserInfoMapper;
 import com.kizai.sys.api.service.UserInfoService;
 
@@ -24,6 +25,12 @@ public class UserInfoServiceImpl implements UserInfoService{
 	public UserInfo selectUserInfo(int userId) {
 		UserInfo userInfoList = userInfoMapper.selectUserInfo(userId);
 		return userInfoList;
+	}
+	
+	public UserInfo insertUserInfo(UserInfoRequestBody userInfoRequestBody) {
+		userInfoMapper.insertUserInfo(userInfoRequestBody);
+		UserInfo userInfo = selectUserInfo(userInfoRequestBody.getEmployeeId());
+		return userInfo;
 	}
 
 }

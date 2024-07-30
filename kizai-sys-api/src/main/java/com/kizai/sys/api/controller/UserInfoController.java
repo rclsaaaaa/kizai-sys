@@ -4,12 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kizai.sys.api.model.entity.UserInfo;
 import com.kizai.sys.api.model.entity.UserInfoList;
+import com.kizai.sys.api.model.requestBody.UserInfoRequestBody;
 import com.kizai.sys.api.service.UserInfoService;
 
 @RestController
@@ -30,6 +32,13 @@ public class UserInfoController {
 	@RequestMapping(value = "/user-info/{user_id}", method = RequestMethod.GET)
 	public UserInfo selectUserInfo(@PathVariable("user_id") int userId) {
 		UserInfo userInfo = userInfoService.selectUserInfo(userId);
+		return userInfo;
+		
+	}
+	
+	@RequestMapping(value = "/user-info/registration", method = RequestMethod.POST)
+	public UserInfo insertUserInfo(@RequestBody UserInfoRequestBody userInfoRequestBody) {
+		UserInfo userInfo = userInfoService.insertUserInfo(userInfoRequestBody);
 		return userInfo;
 		
 	}
