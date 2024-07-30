@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapperとxmlのマッピング -->
+<mapper namespace="com.kizai.sys.api.repository.DeviceInfoMapper">
+
+	<!-- マッピング定義（ユーザ） -->
+	
+	<resultMap id="DeviceInfo" type="com.kizai.sys.api.model.entity.DeviceInfo">
+		<id column="device_id" property="deviceId" />
+		<result column="genre" property="genre" /> 
+		<result column="user_employee_id" property="userEmployeeId"/>
+		<result column="user_employee_name" property="userEmployeeName"/>
+		<result column="manager_employee_id" property="managerEmployeeId"/>
+		<result column="manager_employee_name" property="managerEmployeeName"/>
+		<result column="managerStatus" property="managerStatus"/>
+		<result column="device_location" property="deviceLocation"/>
+		<result column="device_manufacturer" property="deviceManufacturer"/>
+		<result column="device_model" property="deviceModel"/>
+		<result column="memory" property="memory"/>
+		<result column="cpu" property="cpu"/>
+		<result column="os" property="os"/>
+		<result column="mouse_flag" property="mouseFlag"/>
+		<result column="security_wire_flag" property="securityWireFlag"/>
+		<result column="encryption_flag" property="encryptionFlag" />
+	</resultMap>
+		
+	<!-- 機材情報一覧取得 -->
+	<select id="selectDeviceInfoList" resultType="DeviceInfoList">
+        select
+        	device_id, genre, user_employee_id, user_employee_name, manager_employee_id, manager_employee_name, manager_status, device_location
+        from
+        	device_info_detail
+	</select>
+	
+	<!-- 機材情報一覧取得 -->
+	<select id="selectDeviceInfo" resultType="DeviceInfo">
+        select
+        	device_id, genre, user_employee_id, user_employee_name, manager_employee_id, manager_employee_name, manager_status, device_location, device_manufacturer, device_model, memory, cpu, os, mouse_flag, security_wire_flag, encryption_flag
+        from
+        	device_info_detail
+        where
+        	device_id = #{deviceId}
+	</select>
+
+</mapper> 

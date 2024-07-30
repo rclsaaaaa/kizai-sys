@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapperとxmlのマッピング -->
+<mapper namespace="com.kizai.sys.api.repository.UserInfoMapper">
+
+	<!-- マッピング定義（ユーザ） -->
+	
+	<resultMap id="UserInfo" type="com.kizai.sys.api.model.entity.UserInfo">
+		<id column="employee_id" property="employeeId" />
+		<result column="employee_name" property="employeeName" /> 
+		<result column="employee_address" property="employeeAddress"/>
+		<result column="employee_department" property="employeeDepartment"/>
+		<result column="employee_pj" property="employeePj" />
+	</resultMap>
+		
+	<!-- ユーザー情報一覧取得 -->
+	<select id="selectUserInfoList" resultType="UserInfoList">
+        select
+        	employee_id, employee_name, employee_address, employee_department, employee_pj
+        from
+        	user_info
+	</select>
+	
+	<!-- ユーザー情報取得 -->
+	<select id="selectUserInfo" resultType="UserInfo">
+        select
+        	employee_id, employee_name, employee_address, employee_department, employee_pj
+        from
+        	user_info
+        where
+        	employee_id = #{userId}
+	</select>
+
+</mapper> 
