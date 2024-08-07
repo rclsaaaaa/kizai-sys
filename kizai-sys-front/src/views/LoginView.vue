@@ -1,11 +1,10 @@
 <template>
   <div class="login-container">
     <div class="login-box">
-      <label for="employee-number">社員番号</label>
-      <input type="text" id="employee-number" v-model="employeeNumber" />
+      <h2>ログイン</h2>
+      <input type="text" id="employee-number" v-model="employeeNumber" required placeholder="社員番号"/>
 
-      <label for="password">パスワード</label>
-      <input type="password" id="password" v-model="password" />
+      <input type="password" id="password" v-model="password" required placeholder="パスワード"/>
 
       <div class="button-group">
         <button @click="goBack">戻る</button>

@@ -3,7 +3,6 @@
     <img src="./assets/タイトル.png" alt="Logo" class="logo">
   </header>
   <nav>
-    
     <router-link to="/login">login</router-link> |
     <router-link to="/signup">signup</router-link> |
     <router-link to="/signup-auth-code">signup-auth-code</router-link> |

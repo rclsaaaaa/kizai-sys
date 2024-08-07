@@ -1,10 +1,18 @@
 <template>
-  <div class="auth-code-input">
-    <h2>認証コード入力</h2>
-    <p>メールアドレスに送信された -桁の認証コードを入力してください。</p>
-    <input type="text" v-model="authCode" placeholder="認証コードを入力">
-    <button @click="goBack">戻る</button>
-    <button @click="submit">送信</button>
+  <div class="verification-code-form">
+    <div class="form-container">
+      <h2>認証コード入力</h2>
+      <p>メールアドレスに送信された6桁の認証コードを入力してください。</p>
+      <form @submit.prevent="handleSubmit">
+        <div class="form-group">
+          <input type="text" v-model="verificationCode" required />
+        </div>
+        <div class="button-group">
+          <button type="button" @click="goBack">戻る</button>
+          <button type="submit">送信</button>
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -12,32 +20,68 @@
 export default {
   data() {
     return {
-      authCode: ''
-    }
+      verificationCode: ''
+    };
   },
   methods: {
-    goBack() {
-      // 戻るボタンクリック時の処理 (例: 前の画面に戻る)
-      this.$router.back();
+    handleSubmit() {
+      // 送信処理
+      console.log('認証コード:', this.verificationCode);
+      // 必要に応じて画面遷移を実装
     },
-    submit() {
-      // 送信ボタンクリック時の処理 (例: サーバーに認証コードを送信)
-      // axios.post('/api/auth/verify', { code: this.authCode })
-      //   .then(response => {
-      //     // 認証成功時の処理
-      //   })
-      //   .catch(error => {
-      //     // 認証失敗時の処理
-      //   })
+    goBack() {
+      // 戻る処理
+      window.history.back();
     }
   }
-}
+};
 </script>
 
 <style scoped>
-/* CSS styles for the component */
-.auth-code-input {
-  /* フォームのレイアウトを調整するCSS */
-  text-align: center; /* 中央揃え */
+.verification-code-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.form-container {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button-group button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button-group button[type="button"] {
+  background-color: #ccc;
+}
+
+.button-group button[type="submit"] {
+  background-color: #ff9800;
+  color: white;
 }
 </style>

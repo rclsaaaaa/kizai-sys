@@ -1,4 +1,253 @@
 <template>
+  <div class="app">
+    <header>
+      <div class="search">
+        <input type="text" placeholder="検索">
+        <button>ログイン</button>
+      </div>
+      <nav>
+        <a href="#">機材情報登録  </a>
+        <a href="#">個人情報編集  </a>
+        <a href="#">パスワード変更  </a>
+        <a href="#">ログアウト</a>
+      </nav>
+    </header>
+    <main>
+      <div class="device-info-list">
+        <table>
+          <thead>
+            <tr>
+              <th>機材ID</th>
+              <th>種別</th>
+              <th>使用者社員番号</th>
+              <th>使用者名</th>
+              <th>管理者社員番号</th>
+              <th>管理者名</th>
+              <th>管理状態</th>
+              <th>管理場所</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="deviceInfoList in displayedDeviceInfoList" :key="deviceInfoList.deviceId">
+              <td><a href="#" class="detail-Btn" value="詳細" @click="openDeviceInfoDetail(deviceInfoList.deviceId)">{{ deviceInfoList.deviceId }}</a></td>
+              <td>{{ deviceInfoList.genre }}</td>
+              <td>{{ deviceInfoList.userEmployeeId }}</td>
+              <td>{{ deviceInfoList.userEmployeeName }}</td>
+              <td>{{ deviceInfoList.managerEmployeeId }}</td>
+              <td>{{ deviceInfoList.managerEmployeeName }}</td>
+              <td>{{ deviceInfoList.managerStatus }}</td>
+              <td>{{ deviceInfoList.deviceLocation }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div v-if="isDetailModalOpen" class="detail-modal" @click="closeDetailModa">
+        <div class="modal-content" @click.stop>
+          <span class="close" @click="closeDetailModal">&times;</span>
+          <div class="modal-line">
+            <hr size="3" color="#bfb391" width="150">
+          </div>
+          <div class="modaltitle">
+            <h2>ユーザー情報詳細</h2>
+          </div>
+          <div class="modal-line2">
+            <hr size="3" color="#bfb391" width="150">
+          </div>
+          <div class="user-detail">
+            <table class="detail-modal-table">
+              <tr>
+                <th class="detail-userid-title">機材ID</th>
+                <td class="detail-userid-deta">{{ deviceInfoDetail.deviceId }}</td>
+              </tr>
+              <tr>
+                <th class="detail-name-title">種別</th>
+                <td class="detail-name-deta">{{ deviceInfoDetail.genre }}</td>
+              </tr>
+              <tr>
+                <th class="detail-department-title">使用者社員番号</th>
+                <td class="detail-department-deta">{{ deviceInfoDetail.userEmployeeId }}</td>
+              </tr>
+              <tr>
+                <th class="detail-employee-num-title">使用者名</th>
+                <td class="detail-employee-num-deta">{{ deviceInfoDetail.userEmployeeName }}</td>
+              </tr>
+              <tr>
+                <th class="detail-skill-title">管理者社員番号</th>
+                <td class="detail-skill-deta">{{ deviceInfoDetail.managerEmployeeId }}</td>
+              </tr>
+              <tr>
+                <th class="detail-others-title">管理者名</th>
+                <td class="detail-others-deta">{{ deviceInfoDetail.managerEmployeeName }}<br></td>
+              </tr>
+              <tr>
+                <th class="detail-others-title">管理状態</th>
+                <td class="detail-others-deta">{{ deviceInfoDetail.managerStatus }}<br></td>
+              </tr>
+              <tr>
+                <th class="detail-others-title">設置場所</th>
+                <td class="detail-others-deta">{{ deviceInfoDetail.deviceLocation }}<br></td>
+              </tr>
+              <tr>
+                <th class="detail-others-title">メーカー</th>
+                <td class="detail-others-deta">{{ deviceInfoDetail.deviceManufacturer }}<br></td>
+              </tr>
+              <tr>
+                <th class="detail-others-title">機種</th>
+                <td class="detail-others-deta">{{ deviceInfoDetail.deviceModel }}<br></td>
+              </tr>
+              <tr>
+                <th class="detail-others-title">メモリ</th>
+                <td class="detail-others-deta">{{ deviceInfoDetail.memory }}<br></td>
+              </tr>
+              <tr>
+                <th class="detail-others-title">CPU</th>
+                <td class="detail-others-deta">{{ deviceInfoDetail.cpu }}<br></td>
+              </tr>
+              <tr>
+                <th class="detail-others-title">OS</th>
+                <td class="detail-others-deta">{{ deviceInfoDetail.os }}<br></td>
+              </tr>
+              <tr>
+                <th class="detail-others-title">マウス</th>
+                <td class="detail-others-deta">{{ deviceInfoDetail.mouseFlag }}<br></td>
+              </tr>
+              <tr>
+                <th class="detail-others-title">セキュリティワイヤー</th>
+                <td class="detail-others-deta">{{ deviceInfoDetail.securityWireFlag }}<br></td>
+              </tr>
+              <tr>
+                <th class="detail-others-title">暗号化</th>
+                <td class="detail-others-deta">{{ deviceInfoDetail.encryptionFlag }}<br></td>
+              </tr>
+            </table>
+          </div>
+          <input type="submit" class="edit-Btn" value="編集" @click="goToUserEdit">
+        </div>
+      </div>
+      <nav class="pagination">
+        <button @click="prevPage">◀</button>
+        <span v-for="page in pageCount" :key="page" @click="setPage(page)">{{ page }}</span>
+        <button @click="nextPage">▶</button>
+      </nav>
+    </main>
+  </div>
+</template>
+
+<script>
+import axios from 'axios';
+
+const URL = 'http://localhost:18080/device-info'
+
+export default {
+  data() {
+    return {
+      equipments: [
+        // { id: 'PCK-207-876', type: 'PC', ... }, // 機材データの配列
+      ],
+      currentPage: 1,
+      itemsPerPage: 10, // 1ページに表示するアイテム数
+      displayedDeviceInfoList: [],
+      isDetailModalOpen: false,
+      deviceInfoDetail: {}
+    }
+  },
+  computed: {
+    pageCount() {
+      return Math.ceil(this.equipments.length / this.itemsPerPage)
+    },
+    pagedEquipments() {
+      const start = (this.currentPage - 1) * this.itemsPerPage
+      const end = start + this.itemsPerPage
+      return this.equipments.slice(start, end)
+    }
+  },
+  mounted () {
+    axios.get(URL)
+      .then(response => {
+        this.displayedDeviceInfoList = response.data
+      })
+      .catch(error => {
+        console.error(error)
+      })
+
+  },
+  methods: {
+    prevPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--
+      }
+    },
+    nextPage() {
+      if (this.currentPage < this.pageCount) {
+        this.currentPage++
+      }
+    },
+    setPage(page) {
+      this.currentPage = page
+    },
+    openModal () {
+      this.isModalOpen = true
+    },
+    closeModal () {
+      this.isModalOpen = false
+    },
+    openDeviceInfoDetail (deviceId) {
+      axios.get(`${URL}/${deviceId}`)
+        .then(response => {
+          this.deviceInfoDetail = response.data
+          this.isDetailModalOpen = true
+          console.log(response.data)
+          console.log(this.deviceInfoDetail)
+        })
+        .catch(error => {
+          console.error(error)
+        })
+    },
+    goToUserEdit () {
+      this.$store.commit('SET_USER_DETAILS', this.userDetails)
+      this.$router.push('/UserEdit')
+    },
+    closeDetailModal () {
+      this.isDetailModalOpen = false
+    },
+  }
+}
+</script>
+
+<style>
+/* CSS styles here */
+.search{
+  position: absolute; /* 要素を絶対配置にする */
+  top: 100px; /* 上から10px */
+  right: 50px; /* 左から20px */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #ffcc99;
+  color: white;
+}
+
+td {
+  background-color: #fadec3;
+  color: rgb(99, 98, 98);
+}
+</style>
+
+
+
+
+<!-- <template>
   <div class="device-info-list">
     <table>
       <thead>
@@ -293,4 +542,4 @@ td {
   text-decoration: none;
   cursor: pointer;
 }
-</style>
+</style> -->
