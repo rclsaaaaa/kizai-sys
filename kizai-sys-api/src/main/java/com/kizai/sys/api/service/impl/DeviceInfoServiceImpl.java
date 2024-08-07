@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.kizai.sys.api.model.entity.DeviceInfo;
+import com.kizai.sys.api.model.entity.DeviceInfoDetail;
 import com.kizai.sys.api.model.entity.DeviceInfoList;
 import com.kizai.sys.api.repository.DeviceInfoMapper;
 import com.kizai.sys.api.service.DeviceInfoService;
@@ -24,8 +24,8 @@ public class DeviceInfoServiceImpl implements DeviceInfoService{
 
 	}
 
-	public DeviceInfo selectDeviceInfo(String deviceId) {
-		DeviceInfo deviceInfo = deviceInfoMapper.selectDeviceInfo(deviceId);
+	public DeviceInfoDetail selectDeviceInfoDetail(String deviceId) {
+		DeviceInfoDetail deviceInfo = deviceInfoMapper.selectDeviceInfoDetail(deviceId);
 		return deviceInfo;
 
 	}

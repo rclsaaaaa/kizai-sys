@@ -3,37 +3,61 @@ import { createStore } from 'vuex'
 export default createStore({
   strict: true,
   state: {
-    deviceInfoList: {} //機材一覧表示用
+    deviceInfoDetail: {} //機材一覧表示用
   },
   getters: {
   },
   mutations: {
-    SET_DEVICE_INFO_LIST (state, deviceInfoList) {
-      state.deviceInfoList = deviceInfoList
+    SET_DEVICE_INFO_DETAIL (state, deviceInfoDetail) {
+      state.deviceInfoDetail = deviceInfoDetail
     },
     setDeviceId (state, deviceId) {
-      state.deviceInfoList.deviceId = deviceId
+      state.deviceInfoDetail.deviceId = deviceId
     },
     setGenre(state, genre) {
-      state.deviceInfoList.genre = genre
+      state.deviceInfoDetail.genre = genre
     },
     setUserEmployeeId(state, userEmployeeId) {
-      state.deviceInfoList.userEmployeeId = userEmployeeId
+      state.deviceInfoDetail.userEmployeeId = userEmployeeId
     },
     setUserEmployeeName(state, userEmployeeName) {
-      state.deviceInfoList.userEmployeeName = userEmployeeName
+      state.deviceInfoDetail.userEmployeeName = userEmployeeName
     },
     setManagerEmployeeId(state, managerEmployeeId) {
-      state.deviceInfoList.managerEmployeeId = managerEmployeeId
+      state.deviceInfoDetail.managerEmployeeId = managerEmployeeId
     },
     setManagerEmployeeName(state, managerEmployeeName) {
-      state.deviceInfoList.managerEmployeeName = managerEmployeeName
+      state.deviceInfoDetail.managerEmployeeName = managerEmployeeName
     },
     setManagerStatus(state, managerStatus) {
-      state.deviceInfoList.managerStatus = managerStatus
+      state.deviceInfoDetail.managerStatus = managerStatus
     },
     setDeviceLocation(state, deviceLocation) {
-      state.deviceInfoList.deviceLocation = deviceLocation
+      state.deviceInfoDetail.deviceLocation = deviceLocation
+    },
+    setDeviceManufacturer(state, deviceManufacturer) {
+      state.deviceInfoDetail.deviceManufacturer = deviceManufacturer
+    },
+    setDeviceModel(state, deviceModel) {
+      state.deviceInfoDetail.deviceModel = deviceModel
+    },
+    setMemory(state, memory) {
+      state.deviceInfoDetail.memory = memory
+    },
+    setCpu(state, cpu) {
+      state.deviceInfoDetail.cpu = cpu
+    },
+    setOs(state, os) {
+      state.deviceInfoDetail.os = os
+    },
+    setMouseFlag(state, mouseFlag) {
+      state.deviceInfoDetail.mouseFlag = mouseFlag
+    },
+    setSecurityWireFlag(state, securityWireFlag) {
+      state.deviceInfoDetail.securityWireFlag = securityWireFlag
+    },
+    setEncryptionFlag(state, encryptionFlag) {
+      state.deviceInfoDetail.encryptionFlag = encryptionFlag
     },
   },
   actions: {

@@ -1,8 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MainView from '../views/MainView.vue'
 import LoginView from '../views/LoginView.vue'
-import PasswordResetCodeView from '../views/PasswordResetCodeView.vue'
+import PasswordResetAuthCodeView from '../views/PasswordResetAuthCodeView.vue'
 import PasswordResetView from '../views/PasswordResetView.vue'
+import SignupView from '../views/SignupView.vue'
+import SignupAuthCodeView from '../views/SignupAuthCodeView.vue'
 
 const routes = [
   {
@@ -16,14 +18,24 @@ const routes = [
     component: LoginView
   },
   {
-    path: '/password-reset-code',
-    name: 'passwordResetCode',
-    component: PasswordResetCodeView
+    path: '/password-reset-auth-code',
+    name: 'passwordResetAuthCode',
+    component: PasswordResetAuthCodeView
   },
   {
     path: '/password-reset',
     name: 'passwordReset',
     component: PasswordResetView
+  },
+  {
+    path: '/signup',
+    name: 'signup',
+    component: SignupView
+  },
+  {
+    path: '/signup-auth-code',
+    name: 'signupAuthCode',
+    component: SignupAuthCodeView
   },
 ]
 

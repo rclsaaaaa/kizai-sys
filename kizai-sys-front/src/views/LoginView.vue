@@ -1,6 +1,5 @@
 <template>
   <div class="login-container">
-    <h1>機材管理システム</h1>
     <div class="login-box">
       <label for="employee-number">社員番号</label>
       <input type="text" id="employee-number" v-model="employeeNumber" />
@@ -58,7 +57,6 @@ export default {
 <style scoped>
 .login-container {
   text-align: center;
-  background: linear-gradient(to bottom, #f8d7b2, #f2ae43);
   height: 100vh;
   display: flex;
   flex-direction: column;

@@ -3,7 +3,7 @@ package com.kizai.sys.api.model.entity;
 import lombok.Data;
 
 @Data
-public class DeviceInfo {
+public class DeviceInfoDetail {
 	
 	private String deviceId;
 	private String genre;

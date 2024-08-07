@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kizai.sys.api.model.entity.DeviceInfo;
+import com.kizai.sys.api.model.entity.DeviceInfoDetail;
 import com.kizai.sys.api.model.entity.DeviceInfoList;
 import com.kizai.sys.api.model.entity.UserInfo;
 import com.kizai.sys.api.service.DeviceInfoService;
@@ -34,8 +34,8 @@ public class DeviceInfoController {
 	
 	//ユーザー情報取得
 	@RequestMapping(value = "/device-info/{device_id}", method = RequestMethod.GET)
-	public DeviceInfo selectDeviceInfo(@PathVariable("device_id") String deviceId) {
-		DeviceInfo deviceInfo = deviceInfoService.selectDeviceInfo(deviceId);
+	public DeviceInfoDetail selectDeviceInfoDetail(@PathVariable("device_id") String deviceId) {
+		DeviceInfoDetail deviceInfo = deviceInfoService.selectDeviceInfoDetail(deviceId);
 		return deviceInfo;
 	}
 
