@@ -7,7 +7,7 @@
 
 	<!-- マッピング定義（ユーザ） -->
 	
-	<resultMap id="DeviceInfo" type="com.kizai.sys.api.model.entity.DeviceInfo">
+	<resultMap id="DeviceInfo" type="com.kizai.sys.api.model.entity.DeviceInfoDetail">
 		<id column="device_id" property="deviceId" />
 		<result column="genre" property="genre" /> 
 		<result column="user_employee_id" property="userEmployeeId"/>
@@ -34,8 +34,8 @@
         	device_info_detail
 	</select>
 	
-	<!-- 機材情報一覧取得 -->
-	<select id="selectDeviceInfo" resultType="DeviceInfo">
+	<!-- 機材情報詳細取得 -->
+	<select id="selectDeviceInfoDetail" resultType="DeviceInfoDetail">
         select
         	device_id, genre, user_employee_id, user_employee_name, manager_employee_id, manager_employee_name, manager_status, device_location, device_manufacturer, device_model, memory, cpu, os, mouse_flag, security_wire_flag, encryption_flag
         from
@@ -43,5 +43,30 @@
         where
         	device_id = #{deviceId}
 	</select>
+	
+	<!-- 機材情報詳細取得 -->
+	<update id="updateDeviceInfoDetail">
+		update
+			device_info_detail
+		SET
+			device_id = #{deviceId},
+			genre = #{genre},
+			user_employee_id = #{userEmployeeId},
+			user_employee_name = #{userEmployeeName},
+			manager_employee_id = #{managerEmployeeId},
+			manager_employee_name = #{managerEmployeeName},
+			manager_status = #{managerStatus},
+			device_location = #{deviceLocation},
+			device_manufacturer = #{deviceManufacturer},
+			device_model = #{deviceModel},
+			memory = #{memory},
+			cpu = #{cpu},
+			os = #{os},
+			mouse_flag = #{mouseFlag},
+			security_wire_flag = #{securityWireFlag},
+			encryption_flag = #{encryptionFlag}
+		WHERE
+			device_id = #{deviceId}
+	</update>
 
 </mapper> 

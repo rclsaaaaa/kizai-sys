@@ -3,7 +3,7 @@ package com.kizai.sys.api.model.entity;
 import lombok.Data;
 
 @Data
-public class UserInfo {
+public class UserInfoDetail {
 	private int employeeId;
 	private String employeeName;
 	private String employeeAddress;
