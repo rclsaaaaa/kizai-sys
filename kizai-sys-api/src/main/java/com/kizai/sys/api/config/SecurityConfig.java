@@ -54,10 +54,13 @@ public class SecurityConfig{
 		.csrf((csrf) -> csrf
 //				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 				.ignoringRequestMatchers("/api/csrf")
+				.ignoringRequestMatchers("/device-info/update/{device_id}")
+				.ignoringRequestMatchers("/user-info/registration")
 				)
-		.cors((cors) -> cors
-				.configurationSource(corsConfigurationSource())
-				);
+//		.cors((cors) -> cors
+//				.configurationSource(corsConfigurationSource())
+//				)
+		;
 
 		return http.build();
 	}

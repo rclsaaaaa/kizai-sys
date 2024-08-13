@@ -2,15 +2,6 @@
   <header>
     <img @click="goToMainPage" src="./assets/タイトル.png" alt="Logo" class="logo">
   </header>
-  <!-- <nav>
-    <router-link to="/login">login</router-link> |
-    <router-link to="/signup">signup</router-link> |
-    <router-link to="/signup-auth-code">signup-auth-code</router-link> |
-    <router-link to="/">main</router-link> |
-    <router-link to="/password-reset">password-reset</router-link> |
-    <router-link to="/password-reset-auth-code">password-reset-auth-code</router-link>
-    
-  </nav> -->
   <router-view/>
 </template>
 

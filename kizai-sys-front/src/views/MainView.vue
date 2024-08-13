@@ -290,23 +290,23 @@
             <!-- 編集フォーム内容 -->
             <table class="edit-modal-table">
               <tr>
-                <th class="edit-userid-title">機材ID</th>
+                <th class="edit-userid-title">社員番号</th>
                 <td class="edit-userid-deta"><input/></td>
               </tr>
               <tr>
-                <th class="edit-name-title">種別</th>
+                <th class="edit-name-title">名前</th>
                 <td class="edit-name-deta"><input v-model="deviceInfoDetail.genre" /></td>
               </tr>
               <tr>
-                <th class="edit-userid-title">使用者社員番号</th>
+                <th class="edit-userid-title">メールアドレス</th>
                 <td class="edit-userid-deta"><input v-model="deviceInfoDetail.userEmployeeId"/></td>
               </tr>
               <tr>
-                <th class="edit-userid-title">使用者名</th>
+                <th class="edit-userid-title">所属部署</th>
                 <td class="edit-userid-deta"><input v-model="deviceInfoDetail.userEmployeeName"/></td>
               </tr>
               <tr>
-                <th class="edit-userid-title">管理者社員番号</th>
+                <th class="edit-userid-title">所属PJ</th>
                 <td class="edit-userid-deta"><input v-model="deviceInfoDetail.managerEmployeeId"/></td>
               </tr>
             </table>
@@ -478,12 +478,12 @@ export default {
           console.error(error)
         })
 
-      const axiosPost = axios.create({
-        xsrfHeaderName: 'X-CSRF-Token',
-        withXSRFToken: this.csrfToken
-      })
+      // const axiosPost = axios.create({
+      //   xsrfHeaderName: 'X-CSRF-Token',
+      //   withXSRFToken: this.csrfToken
+      // })
 
-      axiosPost.post(`${URL}/update/${this.deviceInfoDetail.deviceId}`, this.deviceInfoDetail.deviceId, formData)
+      axios.post(`${URL}/update/${this.deviceInfoDetail.deviceId}`,formData)
         .then(response => {
           alert('機材情報が更新されました。');
           console.log(response.data)
