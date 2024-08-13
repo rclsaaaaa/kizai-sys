@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.kizai.sys.api.model.entity.DeviceInfoDetail;
 import com.kizai.sys.api.model.entity.DeviceInfoList;
+import com.kizai.sys.api.model.requestBody.DeviceInfoDetailRequestBody;
 import com.kizai.sys.api.repository.DeviceInfoMapper;
 import com.kizai.sys.api.service.DeviceInfoService;
 
@@ -28,6 +29,10 @@ public class DeviceInfoServiceImpl implements DeviceInfoService{
 		DeviceInfoDetail deviceInfo = deviceInfoMapper.selectDeviceInfoDetail(deviceId);
 		return deviceInfo;
 
+	}
+	
+	public void updateDeviceInfoDetail(DeviceInfoDetailRequestBody deviceInfoRequestBody) {
+		deviceInfoMapper.updateDeviceInfoDetail(deviceInfoRequestBody);
 	}
 
 }

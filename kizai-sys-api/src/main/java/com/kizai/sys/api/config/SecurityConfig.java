@@ -43,10 +43,11 @@ public class SecurityConfig{
 		http
 		.authorizeHttpRequests((authz) -> authz
 				.requestMatchers("/user-info").permitAll()
-				.requestMatchers("/user-info/{user_Id}").permitAll()
+				.requestMatchers("/user-info/{user_id}").permitAll()
 				.requestMatchers("/device-info").permitAll()
 				.requestMatchers("/device-info/{device_id}").permitAll()
 				.requestMatchers("/user-info/registration").permitAll()
+				.requestMatchers("/device-info/update/{device_id}").permitAll()
 				.requestMatchers("/api/csrf").permitAll()
 				.anyRequest().authenticated()
 				)

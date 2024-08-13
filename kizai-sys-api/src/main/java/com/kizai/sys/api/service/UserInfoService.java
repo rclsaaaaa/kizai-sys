@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.kizai.sys.api.model.entity.UserInfo;
+import com.kizai.sys.api.model.entity.UserInfoDetail;
 import com.kizai.sys.api.model.entity.UserInfoList;
 import com.kizai.sys.api.model.requestBody.UserInfoRequestBody;
 
@@ -12,7 +12,7 @@ import com.kizai.sys.api.model.requestBody.UserInfoRequestBody;
 public interface UserInfoService {
 	
 	public List<UserInfoList> selectUserInfoList();
-	public UserInfo selectUserInfo(int userId);
-	public UserInfo insertUserInfo(UserInfoRequestBody userInfoRequestBody);
+	public UserInfoDetail selectUserInfo(int userId);
+	public UserInfoDetail insertUserInfo(UserInfoRequestBody userInfoRequestBody);
 
 }

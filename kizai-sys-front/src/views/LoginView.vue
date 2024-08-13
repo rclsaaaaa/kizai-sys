@@ -8,12 +8,12 @@
 
       <div class="button-group">
         <button @click="goBack">戻る</button>
-        <button @click="submit">送信</button>
+        <button @click="goToMainPage">送信</button>
       </div>
 
       <div class="links">
-        <a href="#" @click="register">新規登録</a>
-        <a href="#" @click="forgotPassword">パスワードを忘れた方はこちら</a>
+        <a href="#" @click="goToSignupPage">新規登録</a>
+        <a href="#" @click="goToPasswordResetPage">パスワードを忘れた方はこちら</a>
       </div>
     </div>
   </div>
@@ -48,7 +48,17 @@ export default {
     forgotPassword() {
       // パスワード再設定画面に遷移する処理
       this.$router.push({ name: 'ForgotPassword' });
+    },
+    goToMainPage(){
+      this.$router.push('/')
+    },
+    goToSignupPage(){
+      this.$router.push('/signup')
+    },
+    goToPasswordResetPage(){
+      this.$router.push('/password-reset')
     }
+
   }
 };
 </script>
@@ -69,7 +79,7 @@ h1 {
 }
 
 .login-box {
-  background: #cfe1f2;
+  background: #c2d7ff;
   padding: 2rem;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

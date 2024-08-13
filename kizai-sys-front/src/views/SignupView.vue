@@ -17,7 +17,7 @@
         </div>
         <div class="button-group">
           <button type="button" @click="goBack">戻る</button>
-          <button type="submit">送信</button>
+          <button type="submit" @click="goToSignupAuthCodePage">送信</button>
         </div>
       </form>
     </div>
@@ -49,6 +49,9 @@ export default {
     goBack() {
       // 戻る処理
       window.history.back();
+    },
+    goToSignupAuthCodePage(){
+      this.$router.push('/signup-auth-code')
     }
   }
 };
@@ -63,7 +66,7 @@ export default {
 }
 
 .form-container {
-  background: rgba(255, 255, 255, 0.9);
+  background: #c2d7ff;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
