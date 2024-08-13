@@ -1,10 +1,9 @@
-package com.kizai.sys.api.model.entity;
+package com.kizai.sys.api.model.requestBody;
 
 import lombok.Data;
 
 @Data
-public class DeviceInfo {
-	
+public class DeviceInfoDetailRequestBody {
 	private String deviceId;
 	private String genre;
 	private int userEmployeeId;

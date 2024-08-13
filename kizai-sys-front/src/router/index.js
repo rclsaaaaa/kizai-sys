@@ -1,20 +1,42 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import MainView from '../views/MainView.vue'
+import LoginView from '../views/LoginView.vue'
+import PasswordResetAuthCodeView from '../views/PasswordResetAuthCodeView.vue'
+import PasswordResetView from '../views/PasswordResetView.vue'
+import SignupView from '../views/SignupView.vue'
+import SignupAuthCodeView from '../views/SignupAuthCodeView.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView
+    name: 'main',
+    component: MainView
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
+    path: '/login',
+    name: 'login',
+    component: LoginView
+  },
+  {
+    path: '/password-reset-auth-code',
+    name: 'passwordResetAuthCode',
+    component: PasswordResetAuthCodeView
+  },
+  {
+    path: '/password-reset',
+    name: 'passwordReset',
+    component: PasswordResetView
+  },
+  {
+    path: '/signup',
+    name: 'signup',
+    component: SignupView
+  },
+  {
+    path: '/signup-auth-code',
+    name: 'signupAuthCode',
+    component: SignupAuthCodeView
+  },
 ]
 
 const router = createRouter({

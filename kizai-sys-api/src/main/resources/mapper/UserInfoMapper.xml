@@ -7,7 +7,7 @@
 
 	<!-- マッピング定義（ユーザ） -->
 	
-	<resultMap id="UserInfo" type="com.kizai.sys.api.model.entity.UserInfo">
+	<resultMap id="UserInfo" type="com.kizai.sys.api.model.entity.UserInfoDetail">
 		<id column="employee_id" property="employeeId" />
 		<result column="employee_name" property="employeeName" /> 
 		<result column="employee_address" property="employeeAddress"/>
@@ -24,7 +24,7 @@
 	</select>
 	
 	<!-- ユーザー情報取得 -->
-	<select id="selectUserInfo" resultType="UserInfo">
+	<select id="selectUserInfo" resultType="UserInfoDetail">
         select
         	employee_id, employee_name, employee_address, employee_department, employee_pj
         from
@@ -32,5 +32,22 @@
         where
         	employee_id = #{userId}
 	</select>
+	
+	<insert id="insertUserInfo">
+		insert into user_info(
+			employee_id,
+			employee_name,
+			employee_address,
+			employee_department,
+			employee_pj
+		)
+		values(
+			#{employeeId},
+			#{employeeName},
+			#{employeeAddress},
+			#{employeeDepartment},
+			#{employeePj}
+		)
+	</insert>
 
 </mapper> 
