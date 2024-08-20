@@ -1,14 +1,12 @@
-package com.kizai.sys.api.model.entity;
+package com.kizai.sys.api.model.requestBody;
 
 import lombok.Data;
 
 @Data
-public class UserInfoList {
+public class UserInfoUpdateRequestBody {
 	private int employeeId;
-	private String password;
 	private String employeeName;
 	private String employeeAddress;
 	private String employeeDepartment;
 	private String employeePj;
-
 }
