@@ -9,6 +9,7 @@
 	
 	<resultMap id="UserInfo" type="com.kizai.sys.api.model.entity.UserInfoDetail">
 		<id column="employee_id" property="employeeId" />
+		<id column="password" property="password" />
 		<result column="employee_name" property="employeeName" /> 
 		<result column="employee_address" property="employeeAddress"/>
 		<result column="employee_department" property="employeeDepartment"/>
@@ -18,7 +19,7 @@
 	<!-- ユーザー情報一覧取得 -->
 	<select id="selectUserInfoList" resultType="UserInfoList">
         select
-        	employee_id, employee_name, employee_address, employee_department, employee_pj
+        	employee_id, password, employee_name, employee_address, employee_department, employee_pj
         from
         	user_info
 	</select>
@@ -26,7 +27,7 @@
 	<!-- ユーザー情報取得 -->
 	<select id="selectUserInfo" resultType="UserInfoDetail">
         select
-        	employee_id, employee_name, employee_address, employee_department, employee_pj
+        	employee_id, password, employee_name, employee_address, employee_department, employee_pj
         from
         	user_info
         where
@@ -36,18 +37,36 @@
 	<insert id="insertUserInfo">
 		insert into user_info(
 			employee_id,
-			employee_name,
-			employee_address,
-			employee_department,
-			employee_pj
+			password,
+			employee_address
 		)
 		values(
 			#{employeeId},
-			#{employeeName},
-			#{employeeAddress},
-			#{employeeDepartment},
-			#{employeePj}
+			#{password},
+			#{employeeAddress}
 		)
 	</insert>
+	<!-- ユーザー情報取得 -->
+	<select id="login" resultType="UserInfoDetail">
+        select
+        	employee_id, password, employee_name, employee_address, employee_department, employee_pj
+        from
+        	user_info
+        where
+        	employee_id = #{employeeId} and password = #{password}
+	</select>
+	
+	<!-- ユーザー情報更新 -->
+	<update id="updateUserInfo">
+		update
+			user_info
+		SET
+			employee_name = #{employeeName},
+			employee_address = #{employeeAddress},
+			employee_department = #{employeeDepartment},
+			employee_pj = #{employeePj}
+		WHERE
+			employee_id = #{employeeId}
+	</update>
 
 </mapper> 

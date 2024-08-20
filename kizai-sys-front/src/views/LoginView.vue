@@ -2,7 +2,7 @@
   <div class="login-container">
     <div class="login-box">
       <h2>ログイン</h2>
-      <input type="text" id="employee-number" v-model="employeeNumber" required placeholder="社員番号"/>
+      <input type="text" id="employee-id" v-model="employeeId" required placeholder="社員番号"/>
 
       <input type="password" id="password" v-model="password" required placeholder="パスワード"/>
 
@@ -20,10 +20,14 @@
 </template>
 
 <script>
+import axios from 'axios';
+
+const URL = 'http://localhost:18080/user-login'
+
 export default {
   data() {
     return {
-      employeeNumber: '',
+      employeeId: '',
       password: ''
     };
   },
@@ -32,14 +36,22 @@ export default {
       // 前の画面に戻る処理
       this.$router.go(-1);
     },
-    submit() {
+    login() {
       // ログイン情報を送信する処理
-      const loginData = {
-        employeeNumber: this.employeeNumber,
+      const formData = {
+        employeeId: this.employeeId,
         password: this.password
       };
-      console.log('ログイン情報:', loginData);
+      console.log('ログイン情報:', formData);
       // ここにログインAPI呼び出しを追加
+      axios.post(URL, formData)
+        .then(response => {
+          console.log(response.data)
+          console.log('ログイン成功')
+        })
+        .catch(error => {
+          console.error(error)
+        });
     },
     register() {
       // 新規登録画面に遷移する処理
@@ -50,6 +62,8 @@ export default {
       this.$router.push({ name: 'ForgotPassword' });
     },
     goToMainPage(){
+      console.log('メインページ遷移メソッド実行')
+      this.login()
       this.$router.push('/')
     },
     goToSignupPage(){
