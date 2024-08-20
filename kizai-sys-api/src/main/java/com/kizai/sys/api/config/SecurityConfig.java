@@ -22,22 +22,6 @@ public class SecurityConfig{
 	@Value("${corsAllowSrc}")
 	private String corsAllowSrc;
 
-
-	//	@Bean
-	//	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-	//		http
-	//		.requestMatchers(HttpMethod.GET,"/test").permitAll()
-	//		.antMatchers(HttpMethod.GET,"/select").permitAll()
-	//		.antMatchers("/**").permitAll()
-	//		//					.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-	//		//					.and()
-	//		.cors().configurationSource(corsConfigurationSource())
-	//		.authorizeRequests()
-	//		.anyRequest().authenticated();
-	//
-	//		return http.build();
-	//	}
-
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
@@ -49,6 +33,7 @@ public class SecurityConfig{
 				.requestMatchers("/user-info/registration").permitAll()
 				.requestMatchers("/device-info/update/{device_id}").permitAll()
 				.requestMatchers("/api/csrf").permitAll()
+				.requestMatchers("/user-login").permitAll()
 				.anyRequest().authenticated()
 				)
 		.csrf((csrf) -> csrf
@@ -56,6 +41,8 @@ public class SecurityConfig{
 				.ignoringRequestMatchers("/api/csrf")
 				.ignoringRequestMatchers("/device-info/update/{device_id}")
 				.ignoringRequestMatchers("/user-info/registration")
+				.ignoringRequestMatchers("/user-login")
+				.ignoringRequestMatchers("/user-info/update")
 				)
 //		.cors((cors) -> cors
 //				.configurationSource(corsConfigurationSource())

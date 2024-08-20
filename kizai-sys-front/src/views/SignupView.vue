@@ -4,7 +4,7 @@
       <h2>新規登録</h2>
       <form @submit.prevent="handleSubmit">
         <div class="form-group">
-          <input type="email" id="email" v-model="email"  required placeholder="メールアドレス"/>
+          <input type="email" id="email" v-model="employeeAddress"  required placeholder="メールアドレス"/>
         </div>
         <div class="form-group">
           <input type="text" id="employeeId" v-model="employeeId" required placeholder="社員番号"/>
@@ -25,10 +25,14 @@
 </template>
 
 <script>
+import axios from 'axios';
+
+const URL = 'http://localhost:18080/user-info/registration'
+
 export default {
   data() {
     return {
-      email: '',
+      employeeAddress: '',
       employeeId: '',
       password: '',
       confirmPassword: ''
@@ -50,7 +54,26 @@ export default {
       // 戻る処理
       window.history.back();
     },
+    insertUserInfo(){
+
+      const formData = {
+        employeeId:this.employeeId,
+        password:this.password,
+        employeeAddress:this.employeeAddress
+      }
+
+      axios.put(URL, formData)
+        .then(response => {
+          console.log(response.data)
+
+        })
+        .catch(error => {
+          console.error(error)
+        });
+
+    },
     goToSignupAuthCodePage(){
+      this.insertUserInfo()
       this.$router.push('/signup-auth-code')
     }
   }

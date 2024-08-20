@@ -291,26 +291,26 @@
             <table class="edit-modal-table">
               <tr>
                 <th class="edit-userid-title">社員番号</th>
-                <td class="edit-userid-deta"><input/></td>
+                <td class="edit-userid-deta"><input v-model="employeeId"/></td>
               </tr>
               <tr>
                 <th class="edit-name-title">名前</th>
-                <td class="edit-name-deta"><input v-model="deviceInfoDetail.genre" /></td>
+                <td class="edit-name-deta"><input v-model="employeeName" /></td>
               </tr>
               <tr>
                 <th class="edit-userid-title">メールアドレス</th>
-                <td class="edit-userid-deta"><input v-model="deviceInfoDetail.userEmployeeId"/></td>
+                <td class="edit-userid-deta"><input v-model="employeeAdress"/></td>
               </tr>
               <tr>
                 <th class="edit-userid-title">所属部署</th>
-                <td class="edit-userid-deta"><input v-model="deviceInfoDetail.userEmployeeName"/></td>
+                <td class="edit-userid-deta"><input v-model="employeeDepartment"/></td>
               </tr>
               <tr>
                 <th class="edit-userid-title">所属PJ</th>
-                <td class="edit-userid-deta"><input v-model="deviceInfoDetail.managerEmployeeId"/></td>
+                <td class="edit-userid-deta"><input v-model="employeePj"/></td>
               </tr>
             </table>
-            <input type="submit" class="save-Btn" value="保存" @click="updateDeviceInfo">
+            <input type="submit" class="save-Btn" value="保存" @click="updateUserInfo">
           </div>
         </div>
       </div>
@@ -357,6 +357,11 @@ export default {
       isUpdateUserInfoModalOpen: false,
       isLogoutModalOpen: false,
       csrfToken: '',
+      employeeId: '',
+      employeeName:'',
+      employeeAdress:'',
+      employeeDepartment:'',
+      employeePj:''
       
     }
   },
@@ -508,12 +513,33 @@ export default {
       this.isInsertDeviceInfoModalOpen = false
     },
 
-    //機材情報登録モーダル
+    //ユーザー情報編集モーダル
     openUpdateUserInfoModal () {
       this.isUpdateUserInfoModalOpen = true;
     },
     closeUpdateUserInfoModal () {
       this.isUpdateUserInfoModalOpen = false
+    },
+
+    updateUserInfo(){
+
+      const formData = {
+        employeeId: this.employeeId,
+        employeeName: this.employeeName,
+        employeeAddress: this.employeeAdress,
+        employeeDepartment: this.employeeDepartment,
+        employeePj: this.employeePj
+      }
+
+      axios.post('http://localhost:18080/user-info/update', formData)
+        .then(response => {
+          console.log(response.data)
+
+        })
+        .catch(error => {
+          console.error(error)
+        });
+
     },
 
     //ログアウトモーダル
