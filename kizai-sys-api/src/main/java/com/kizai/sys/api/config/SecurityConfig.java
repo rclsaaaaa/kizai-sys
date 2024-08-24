@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
@@ -37,16 +39,16 @@ public class SecurityConfig{
 				.anyRequest().authenticated()
 				)
 		.csrf((csrf) -> csrf
-//				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+				//				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 				.ignoringRequestMatchers("/api/csrf")
 				.ignoringRequestMatchers("/device-info/update/{device_id}")
 				.ignoringRequestMatchers("/user-info/registration")
 				.ignoringRequestMatchers("/user-login")
 				.ignoringRequestMatchers("/user-info/update")
 				)
-//		.cors((cors) -> cors
-//				.configurationSource(corsConfigurationSource())
-//				)
+		//		.cors((cors) -> cors
+		//				.configurationSource(corsConfigurationSource())
+		//				)
 		;
 
 		return http.build();
@@ -63,5 +65,10 @@ public class SecurityConfig{
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
+	}
+
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 }

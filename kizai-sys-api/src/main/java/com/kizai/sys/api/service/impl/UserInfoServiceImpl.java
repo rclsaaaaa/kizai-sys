@@ -3,6 +3,7 @@ package com.kizai.sys.api.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.kizai.sys.api.model.entity.UserInfoDetail;
@@ -19,6 +20,9 @@ public class UserInfoServiceImpl implements UserInfoService{
 	@Autowired
 	private UserInfoMapper userInfoMapper;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
 	public List<UserInfoList> selectUserInfoList() {
 		List<UserInfoList> userInfoList = userInfoMapper.selectUserInfoList();
 		return userInfoList;
@@ -30,15 +34,24 @@ public class UserInfoServiceImpl implements UserInfoService{
 	}
 
 	public UserInfoDetail insertUserInfo(UserInfoRegistRequestBody userInfoRegistRequestBody) {
+		
+		userInfoRegistRequestBody.setPassword(passwordEncoder.encode(userInfoRegistRequestBody.getPassword()));
 		userInfoMapper.insertUserInfo(userInfoRegistRequestBody);
 		UserInfoDetail userInfo = selectUserInfo(userInfoRegistRequestBody.getEmployeeId());
 		return userInfo;
 	}
 
 	public UserInfoDetail login(UserLoginRequestBody userLoginRequestBody) {
-
-		UserInfoDetail userInfoDetail = userInfoMapper.login(userLoginRequestBody);
-		return userInfoDetail;
+		UserInfoDetail userInfoDetail = selectUserInfo(userLoginRequestBody.getEmployeeId());
+		String password = userLoginRequestBody.getPassword();
+		userLoginRequestBody.setPassword(passwordEncoder.encode(userLoginRequestBody.getPassword()));
+		
+		if(passwordEncoder.matches(password, userInfoDetail.getPassword())) {
+			System.out.println("一致したよ");
+            return userInfoDetail;
+		}
+		
+		return null;
 	}
 
 	public UserInfoDetail updateUserInfo(UserInfoUpdateRequestBody userInfoUpdateRequestBody) {

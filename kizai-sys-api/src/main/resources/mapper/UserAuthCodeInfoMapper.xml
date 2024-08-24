@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapperとxmlのマッピング -->
+<mapper namespace="com.kizai.sys.api.repository.UserAuthCodeInfoMapper">
+
+	<!-- マッピング定義（ユーザ） -->
+	
+	<resultMap id="UserAuthCodeInfo" type="com.kizai.sys.api.model.entity.UserAuthCodeInfo">
+		<id column="employee_id" property="employeeId" />
+		<id column="auth_code" property="authCode" />
+	</resultMap>
+		
+	<!-- ユーザー情報一覧取得 -->
+	<select id="selectUserAuthCodeInfo" resultType="UserAuthCodeInfo">
+        select
+        	employee_id, auth_code
+        from
+        	user_auth_code_info
+        where
+        	employee_id = #{userId}
+	</select>
+	
+	<insert id="insertUserAuthCodeInfo">
+		insert into user_auth_code_info(
+			employee_id,
+			auth_code
+		)
+		values(
+			#{employeeId},
+			#{authCode}
+		)
+	</insert>
+
+</mapper> 

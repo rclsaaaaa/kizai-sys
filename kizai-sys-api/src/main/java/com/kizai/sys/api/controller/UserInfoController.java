@@ -14,6 +14,7 @@ import com.kizai.sys.api.model.entity.UserInfoList;
 import com.kizai.sys.api.model.requestBody.UserInfoRegistRequestBody;
 import com.kizai.sys.api.model.requestBody.UserInfoUpdateRequestBody;
 import com.kizai.sys.api.model.requestBody.UserLoginRequestBody;
+import com.kizai.sys.api.service.UserAuthCodeInfoService;
 import com.kizai.sys.api.service.UserInfoService;
 
 @RestController
@@ -21,7 +22,9 @@ public class UserInfoController {
 
 	@Autowired
 	private UserInfoService userInfoService;
-
+	
+	@Autowired
+	private UserAuthCodeInfoService userAuthCodeInfoService;
 
 	//ログイン
 	@RequestMapping(value = "/user-login", method = RequestMethod.POST)
@@ -33,6 +36,7 @@ public class UserInfoController {
 	//ユーザー情報一覧取得
 	@RequestMapping(value = "/user-info", method = RequestMethod.GET)
 	public List<UserInfoList> selectUserInfoList() {
+
 		List<UserInfoList> userInfoList = userInfoService.selectUserInfoList();
 		return userInfoList;
 
@@ -46,15 +50,19 @@ public class UserInfoController {
 
 	}
 
+	//新規登録
 	@RequestMapping(value = "/user-info/registration", method = RequestMethod.PUT)
 	public UserInfoDetail insertUserInfo(@RequestBody UserInfoRegistRequestBody userInfoRegistRequestBody) {
 		UserInfoDetail userInfo = userInfoService.insertUserInfo(userInfoRegistRequestBody);
+		userAuthCodeInfoService.sendUserAuthCode(userInfoRegistRequestBody.getEmployeeId(), userInfoRegistRequestBody.getEmployeeAddress());
 		return userInfo;
 	}
-	
+
+	//ユーザー情報編集
 	@RequestMapping(value = "/user-info/update", method = RequestMethod.POST)
 	public UserInfoDetail updateUserInfo(@RequestBody UserInfoUpdateRequestBody userInfoUpdateRequestBody) {
 		UserInfoDetail userInfo = userInfoService.updateUserInfo(userInfoUpdateRequestBody);
 		return userInfo;
 	}
+
 }

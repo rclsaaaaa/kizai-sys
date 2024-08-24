@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kizai.sys.api.model.entity.DeviceInfoDetail;
 import com.kizai.sys.api.model.entity.DeviceInfoList;
-import com.kizai.sys.api.model.entity.UserInfoDetail;
 import com.kizai.sys.api.model.requestBody.DeviceInfoDetailRequestBody;
 import com.kizai.sys.api.service.DeviceInfoService;
 
