@@ -5,10 +5,15 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.kizai.sys.api.model.entity.UserAuthCodeInfo;
+import com.kizai.sys.api.model.entity.UserInfoDetail;
+import com.kizai.sys.api.model.requestBody.UserAuthCodeInfoRequestBody;
+import com.kizai.sys.api.model.requestBody.UserPasswordResetAuthCodeRequestBody;
 import com.kizai.sys.api.repository.UserAuthCodeInfoMapper;
+import com.kizai.sys.api.repository.UserInfoMapper;
 import com.kizai.sys.api.service.UserAuthCodeInfoService;
 
 import jakarta.mail.MessagingException;
@@ -17,14 +22,21 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class UserAuthCodeInfoServiceImpl implements UserAuthCodeInfoService{
-	
+
 	@Autowired
 	private UserAuthCodeInfoMapper userAuthCodeInfoMapper;
 
+	@Autowired
+	private UserInfoMapper userInfoMapper;
+	
+	@Autowired
+	PasswordEncoder passwordEncoder;
+
 	private final JavaMailSender javaMailSender;
 
-	public void sendUserAuthCode(int userId, String userAddress) {
-		
+	//認証コードメール送信
+	public void sendUserAuthCodeMail(int userId, String userAddress) {
+
 		UserAuthCodeInfo userAuthCodeInfo = createUserAuthCode(userId, userAddress);
 		int authCode = userAuthCodeInfo.getAuthCode();
 
@@ -43,17 +55,42 @@ public class UserAuthCodeInfoServiceImpl implements UserAuthCodeInfoService{
 		}
 
 	}
-	
+
+	//認証コード発行
 	public UserAuthCodeInfo createUserAuthCode(int userId, String userAddress) {
-		
+
 		Random rand = new Random();
 		int authCode = rand.nextInt(9000) + 1000;
-		
+
 		userAuthCodeInfoMapper.insertUserAuthCodeInfo(userId, authCode);
-		
+
 		UserAuthCodeInfo userAuthCodeInfo = userAuthCodeInfoMapper.selectUserAuthCodeInfo(userId);
-		
+
 		return userAuthCodeInfo;
+	}
+
+	//認証コード確認
+	public UserInfoDetail authUserInfo(int userId, int authCode) {
+
+		UserAuthCodeInfo userAuthCodeInfo = userAuthCodeInfoMapper.authUserInfo(userId, authCode);
+
+		UserInfoDetail userInfoDetail = userInfoMapper.selectUserInfo(userAuthCodeInfo.getEmployeeId());
+
+
+		return userInfoDetail;
+	}
+
+	//パスワード再設定
+	public UserInfoDetail authUserPasswordReset(UserPasswordResetAuthCodeRequestBody userPasswordResetAuthCodeRequestBody) {
+
+		UserInfoDetail userInfoDetail = authUserInfo(userPasswordResetAuthCodeRequestBody.getEmployeeId(), userPasswordResetAuthCodeRequestBody.getAuthCode());
+
+		userPasswordResetAuthCodeRequestBody.setPassword(passwordEncoder.encode(userPasswordResetAuthCodeRequestBody.getPassword()));
+		userInfoMapper.updateUserPassword(userPasswordResetAuthCodeRequestBody.getEmployeeId(), userPasswordResetAuthCodeRequestBody.getPassword());
+		
+		userInfoDetail = userInfoMapper.selectUserInfo(userInfoDetail.getEmployeeId());
+
+		return userInfoDetail;
 	}
 
 }

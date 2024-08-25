@@ -17,6 +17,10 @@
 </template>
 
 <script>
+import axios from 'axios';
+
+const URL = 'http://localhost:18080/user-info/password-reset'
+
 export default {
   data() {
     return {
@@ -34,7 +38,20 @@ export default {
       window.history.back();
     },
     goToPasswordResetAuthCodePage(){
+      this.insertUserAuthCode()
+      this.$store.commit('setAuthUserEmployeeId', this.employeeId);
       this.$router.push('/password-reset-auth-code')
+    },
+    insertUserAuthCode(){
+      axios.put(`${URL}/${this.employeeId}`)
+        .then(response => {
+          
+          console.log(response.data)
+        })
+        .catch(error => {
+          console.error(error)
+        })
+
     }
   }
 };

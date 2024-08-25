@@ -5,7 +5,7 @@
       <p>メールアドレスに送信された6桁の認証コードを入力してください。</p>
       <form @submit.prevent="handleSubmit">
         <div class="form-group">
-          <input type="text" v-model="verificationCode" required />
+          <input type="text" v-model="authCode" required />
         </div>
         <div class="button-group">
           <button type="button" @click="goBack">戻る</button>
@@ -17,10 +17,14 @@
 </template>
 
 <script>
+import axios from 'axios';
+
+const URL = 'http://localhost:18080/user-info/auth'
+
 export default {
   data() {
     return {
-      verificationCode: ''
+      authCode: ''
     };
   },
   methods: {
@@ -34,7 +38,25 @@ export default {
       window.history.back();
     },
     goToLoginPage(){
+      console.log('対象ユーザーID:' + this.$store.state.authUserEmployeeId)
+      this.sendAuthCode()
       this.$router.push('/login')
+    },
+    sendAuthCode(){
+
+      const formData = {
+        employeeId: this.$store.state.authUserEmployeeId,
+        authCode: this.authCode
+      }
+
+      axios.put(URL, formData)
+        .then(response => {
+          console.log(response.data)
+        })
+        .catch(error => {
+          console.error(error)
+        })
+
     }
   }
 };

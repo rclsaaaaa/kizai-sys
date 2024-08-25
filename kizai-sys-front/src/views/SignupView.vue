@@ -74,6 +74,7 @@ export default {
     },
     goToSignupAuthCodePage(){
       this.insertUserInfo()
+      this.$store.commit('setAuthUserEmployeeId', this.employeeId);
       this.$router.push('/signup-auth-code')
     }
   }

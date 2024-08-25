@@ -36,6 +36,9 @@ public class SecurityConfig{
 				.requestMatchers("/device-info/update/{device_id}").permitAll()
 				.requestMatchers("/api/csrf").permitAll()
 				.requestMatchers("/user-login").permitAll()
+				.requestMatchers("/user-info/auth").permitAll()
+				.requestMatchers("/user-info/password-reset/{user_id}").permitAll()
+				.requestMatchers("/user-info/password-reset/auth").permitAll()
 				.anyRequest().authenticated()
 				)
 		.csrf((csrf) -> csrf
@@ -45,6 +48,9 @@ public class SecurityConfig{
 				.ignoringRequestMatchers("/user-info/registration")
 				.ignoringRequestMatchers("/user-login")
 				.ignoringRequestMatchers("/user-info/update")
+				.ignoringRequestMatchers("/user-info/auth")
+				.ignoringRequestMatchers("/user-info/password-reset/{user_id}")
+				.ignoringRequestMatchers("/user-info/password-reset/auth")
 				)
 		//		.cors((cors) -> cors
 		//				.configurationSource(corsConfigurationSource())
