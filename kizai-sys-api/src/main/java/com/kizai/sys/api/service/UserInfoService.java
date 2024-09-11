@@ -16,7 +16,7 @@ public interface UserInfoService {
 	public List<UserInfoList> selectUserInfoList();
 	public UserInfoDetail selectUserInfo(int userId);
 	public UserInfoDetail insertUserInfo(UserInfoRegistRequestBody userInfoRequestBody);
-	public UserInfoDetail login(UserLoginRequestBody userLoginRequestBody);
+//	public UserInfoDetail login(UserLoginRequestBody userLoginRequestBody);
 	public UserInfoDetail updateUserInfo(UserInfoUpdateRequestBody userInfoUpdateRequestBody);
 
 }

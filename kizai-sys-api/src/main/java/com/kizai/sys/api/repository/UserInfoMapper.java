@@ -3,6 +3,7 @@ package com.kizai.sys.api.repository;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.kizai.sys.api.model.entity.UserInfoDetail;
 import com.kizai.sys.api.model.entity.UserInfoList;
@@ -17,4 +18,5 @@ public interface UserInfoMapper {
 	public void insertUserInfo(UserInfoRegistRequestBody userInfoRegistRequestBody);
 	public UserInfoDetail login(UserLoginRequestBody userLoginRequestBody);
 	public void updateUserInfo(UserInfoUpdateRequestBody userInfoUpdateRequestBody);
+	public void updateUserPassword(@Param("employeeId") int userId, @Param("password") String password);
 }

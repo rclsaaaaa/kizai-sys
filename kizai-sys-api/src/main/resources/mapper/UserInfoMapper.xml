@@ -46,15 +46,15 @@
 			#{employeeAddress}
 		)
 	</insert>
-	<!-- ユーザー情報取得 -->
-	<select id="login" resultType="UserInfoDetail">
+	<!-- ログイン -->
+	<!--<select id="login" resultType="UserInfoDetail">
         select
         	employee_id, password, employee_name, employee_address, employee_department, employee_pj
         from
         	user_info
         where
         	employee_id = #{employeeId} and password = #{password}
-	</select>
+	</select> -->
 	
 	<!-- ユーザー情報更新 -->
 	<update id="updateUserInfo">
@@ -65,6 +65,16 @@
 			employee_address = #{employeeAddress},
 			employee_department = #{employeeDepartment},
 			employee_pj = #{employeePj}
+		WHERE
+			employee_id = #{employeeId}
+	</update>
+	
+	<!--パスワード更新 -->
+	<update id="updateUserPassword">
+		update
+			user_info
+		SET
+			password = #{password}
 		WHERE
 			employee_id = #{employeeId}
 	</update>

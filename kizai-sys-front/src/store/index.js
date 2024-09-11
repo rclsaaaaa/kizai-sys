@@ -3,7 +3,8 @@ import { createStore } from 'vuex'
 export default createStore({
   strict: true,
   state: {
-    deviceInfoDetail: {} //機材一覧表示用
+    deviceInfoDetail: {}, //機材一覧表示用
+    authUserEmployeeId: ''
   },
   getters: {
   },
@@ -59,6 +60,9 @@ export default createStore({
     setEncryptionFlag(state, encryptionFlag) {
       state.deviceInfoDetail.encryptionFlag = encryptionFlag
     },
+    setAuthUserEmployeeId(state, authUserEmployeeId){
+      state.authUserEmployeeId = authUserEmployeeId
+    }
   },
   actions: {
   },
