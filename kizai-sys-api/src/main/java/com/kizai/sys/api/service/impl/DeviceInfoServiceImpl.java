@@ -17,6 +17,7 @@ public class DeviceInfoServiceImpl implements DeviceInfoService{
 	@Autowired
 	private DeviceInfoMapper deviceInfoMapper;
 
+	//機材情報一覧取得
 	public List<DeviceInfoList> selectDeviceInfoList(){
 
 		List<DeviceInfoList> deviceInfoList = deviceInfoMapper.selectDeviceInfoList();
@@ -24,12 +25,14 @@ public class DeviceInfoServiceImpl implements DeviceInfoService{
 
 	}
 
+	//機材情報詳細取得
 	public DeviceInfoDetail selectDeviceInfoDetail(String deviceId) {
 		DeviceInfoDetail deviceInfo = deviceInfoMapper.selectDeviceInfoDetail(deviceId);
 		return deviceInfo;
 
 	}
 	
+	//機材情報編集
 	public void updateDeviceInfoDetail(DeviceInfoDetailRequestBody deviceInfoRequestBody) {
 		deviceInfoMapper.updateDeviceInfoDetail(deviceInfoRequestBody);
 	}

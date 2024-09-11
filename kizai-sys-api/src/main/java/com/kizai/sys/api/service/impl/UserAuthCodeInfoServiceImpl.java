@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.kizai.sys.api.model.entity.UserAuthCodeInfo;
 import com.kizai.sys.api.model.entity.UserInfoDetail;
-import com.kizai.sys.api.model.requestBody.UserAuthCodeInfoRequestBody;
 import com.kizai.sys.api.model.requestBody.UserPasswordResetAuthCodeRequestBody;
 import com.kizai.sys.api.repository.UserAuthCodeInfoMapper;
 import com.kizai.sys.api.repository.UserInfoMapper;

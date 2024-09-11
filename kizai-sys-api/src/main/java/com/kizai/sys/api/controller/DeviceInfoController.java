@@ -24,23 +24,23 @@ public class DeviceInfoController {
 	
 	Logger logger =LoggerFactory.getLogger(DeviceInfoController.class);
 	
+	//機材情報一覧取得
 	@RequestMapping(value = "/device-info", method = RequestMethod.GET)
 	public List<DeviceInfoList> selectDeviceInfoList(){
 		
 		List<DeviceInfoList> deviceInfoList = deviceInfoService.selectDeviceInfoList();
-		logger.info("get request successed!");
 		return deviceInfoList;
 		
 	}
 	
-	//ユーザー情報取得
+	//機材情報詳細取得
 	@RequestMapping(value = "/device-info/{device_id}", method = RequestMethod.GET)
 	public DeviceInfoDetail selectDeviceInfoDetail(@PathVariable("device_id") String deviceId) {
 		DeviceInfoDetail deviceInfo = deviceInfoService.selectDeviceInfoDetail(deviceId);
 		return deviceInfo;
 	}
 	
-	//ユーザー情報更新
+	//機材情報編集
 	@RequestMapping(value = "/device-info/update/{device_id}", method = RequestMethod.POST)
 	public String updateDeviceInfoDetail(@PathVariable("device_id") String deviceId, @RequestBody DeviceInfoDetailRequestBody deviceInfoDetailRequestBody) {
 		deviceInfoService.updateDeviceInfoDetail(deviceInfoDetailRequestBody);

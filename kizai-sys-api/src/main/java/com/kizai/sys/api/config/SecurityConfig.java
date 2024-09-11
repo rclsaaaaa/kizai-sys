@@ -1,28 +1,39 @@
-
 package com.kizai.sys.api.config;
 
 import java.util.Arrays;
+import java.util.Collections;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import com.kizai.sys.api.model.entity.CustomUserDetails;
+import com.kizai.sys.api.service.impl.CustomUserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig{
 
-	@Value("${corsAllowSrc}")
-	private String corsAllowSrc;
+	@Autowired
+    private CustomUserDetailsServiceImpl customUserDetailsServiceImpl;
+
+	//	@Value("${corsAllowSrc}")
+	//	private String corsAllowSrc;
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -42,7 +53,7 @@ public class SecurityConfig{
 				.anyRequest().authenticated()
 				)
 		.csrf((csrf) -> csrf
-				//				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+				//.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 				.ignoringRequestMatchers("/api/csrf")
 				.ignoringRequestMatchers("/device-info/update/{device_id}")
 				.ignoringRequestMatchers("/user-info/registration")
@@ -55,7 +66,14 @@ public class SecurityConfig{
 		//		.cors((cors) -> cors
 		//				.configurationSource(corsConfigurationSource())
 		//				)
-		;
+		.sessionManagement(session -> session
+				.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) //セッションが必要な場合に作成
+//				.sessionFixation().newSession() // セッション固定攻撃の対策
+//				.maximumSessions(1) // 最大セッション数の制限
+//				.maxSessionsPreventsLogin(true) // 同時ログインの制限（新しいログインを防ぐ）
+				)
+				.authenticationProvider(authenticationProvider());
+
 
 		return http.build();
 	}
@@ -72,9 +90,27 @@ public class SecurityConfig{
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
 	}
+	
+	@Bean
+    public AuthenticationManager authenticationManager() {
+        return new ProviderManager(Collections.singletonList(authenticationProvider()));
+    }
+	
+	@Bean
+	public AuthenticationProvider authenticationProvider() {
+		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+		authProvider.setUserDetailsService(customUserDetailsServiceImpl);
+		authProvider.setPasswordEncoder(passwordEncoder());
+		return authProvider;
+	}
+	
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
 	@Bean
-	PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
+	public HttpSessionEventPublisher httpSessionEventPublisher() {
+		return new HttpSessionEventPublisher(); // セッションイベントをリスンするBeanを登録
 	}
 }

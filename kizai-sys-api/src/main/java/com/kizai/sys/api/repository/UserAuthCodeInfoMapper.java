@@ -4,7 +4,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.kizai.sys.api.model.entity.UserAuthCodeInfo;
-import com.kizai.sys.api.model.requestBody.UserAuthCodeInfoRequestBody;
 
 @Mapper
 public interface UserAuthCodeInfoMapper {

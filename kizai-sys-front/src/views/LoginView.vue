@@ -8,7 +8,7 @@
 
       <div class="button-group">
         <button @click="goBack">戻る</button>
-        <button @click="goToMainPage">送信</button>
+        <button @click="login">送信</button>
       </div>
 
       <div class="links">
@@ -42,12 +42,11 @@ export default {
         employeeId: this.employeeId,
         password: this.password
       };
-      console.log('ログイン情報:', formData);
       // ここにログインAPI呼び出しを追加
       axios.post(URL, formData)
         .then(response => {
-          console.log(response.data)
-          console.log('ログイン成功')
+          console.log(response.data.employeeId)
+          this.goToMainPage()
         })
         .catch(error => {
           console.error(error)
@@ -63,7 +62,6 @@ export default {
     },
     goToMainPage(){
       console.log('メインページ遷移メソッド実行')
-      this.login()
       this.$router.push('/')
     },
     goToSignupPage(){
