@@ -5,7 +5,13 @@
       <p>メールアドレスに送信された6桁の認証コードを入力してください。</p>
       <form @submit.prevent="handleSubmit">
         <div class="form-group">
-          <input type="text" v-model="verificationCode" required />
+          <input type="text" v-model="authCode" required placeholder="認証コード"/>
+        </div>
+        <div class="form-group">
+          <input type="password" id="password" v-model="newPassword" required placeholder="新パスワード"/>
+        </div>
+        <div class="form-group">
+          <input type="password" id="confirmPassword" v-model="newConfirmPassword" required placeholder="新パスワード確認"/>
         </div>
         <div class="button-group">
           <button type="button" @click="goBack">戻る</button>
@@ -17,24 +23,48 @@
 </template>
 
 <script>
+import axios from 'axios';
+
+const URL = 'http://localhost:18080/user-info/password-reset/auth'
+
 export default {
   data() {
     return {
-      verificationCode: ''
+      authCode: '',
+      newPassword: ''
     };
   },
   methods: {
     handleSubmit() {
-      // 送信処理
-      console.log('認証コード:', this.verificationCode);
-      // 必要に応じて画面遷移を実装
+      if (this.password !== this.confirmPassword) {
+        alert('パスワードが一致しません。');
+        return;
+      }
     },
     goBack() {
       // 戻る処理
       window.history.back();
     },
     goToLoginPage(){
+      this.sendAuthCode()
       this.$router.push('/login')
+    },
+    sendAuthCode(){
+
+      const formData = {
+        employeeId: this.$store.state.authUserEmployeeId,
+        authCode: this.authCode,
+        password: this.newPassword
+      }
+
+      axios.post(URL, formData)
+        .then(response => {
+          console.log(response.data)
+        })
+        .catch(error => {
+          console.error(error)
+        })
+
     }
   }
 };
@@ -45,7 +75,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 70vh;
 }
 
 .form-container {
