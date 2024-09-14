@@ -1,0 +1,16 @@
+[phases.setup]
+commands = [
+  "cd kizai-sys-api && ./mvnw clean install",
+  "cd ../kizai-sys-front && npm install"
+]
+
+[phases.build]
+commands = [
+  "cd kizai-sys-api && ./mvnw package",
+  "cd ../kizai-sys-front && npm run build"
+]
+
+[phases.start]
+commands = [
+  "cd kizai-sys-api && java -jar target/*.jar"
+]
