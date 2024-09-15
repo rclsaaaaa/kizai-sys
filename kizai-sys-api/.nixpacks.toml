@@ -3,10 +3,13 @@ version = "1.0.0"
 description = "My Spring Boot application"
 
 [phases.setup]
-cmds = ["yarn install"]
+cmds = [
+  "mvn dependency:purge-local-repository",
+  "mvn clean install"
+]
 
 [phases.build]
 cmds = ["mvn clean package -DskipTests"]
 
 [start]
-cmd = "java -jar target/*.jar"
+cmd = "java -jar ${APP_JAR}"
