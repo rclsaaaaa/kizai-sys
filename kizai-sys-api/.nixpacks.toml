@@ -3,13 +3,10 @@ version = "1.0.0"
 description = "My Spring Boot application"
 
 [phases.setup]
-cmds = [
-  "mvn dependency:purge-local-repository",
-  "mvn clean install"
-]
+cmds = ["./gradlew clean"]
 
 [phases.build]
-cmds = ["mvn clean package -DskipTests"]
+cmds = ["./gradlew build -x test"]
 
 [start]
 cmd = "java -jar ${APP_JAR}"
