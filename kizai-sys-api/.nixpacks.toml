@@ -1,0 +1,12 @@
+name = "kizai-sys-api"
+version = "1.0.0"
+description = "My Spring Boot application"
+
+[phases.setup]
+cmds = ["yarn install"]
+
+[phases.build]
+cmds = ["mvn clean package -DskipTests"]
+
+[start]
+cmd = "java -jar target/*.jar"
