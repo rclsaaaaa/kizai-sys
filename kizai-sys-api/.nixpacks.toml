@@ -13,3 +13,4 @@ cmds = ["mvn clean package -DskipTests"]
 
 [start]
 cmd = "java -jar ${APP_JAR}"
+
