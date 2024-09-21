@@ -39,6 +39,7 @@ public class SecurityConfig{
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
 		.authorizeHttpRequests((authz) -> authz
+				.requestMatchers("/", "/static/**", "/css/**", "/js/**", "/images/**").permitAll() // 静的リソースを許可
 				.requestMatchers("/user-info").permitAll()
 				.requestMatchers("/user-info/{user_id}").permitAll()
 				.requestMatchers("/device-info").permitAll()

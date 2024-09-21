@@ -8,10 +8,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 public class ApiController {
-	
+
 	// CSRFトークンを返すためだけのパス
-		@GetMapping("/csrf")
-		public CsrfToken csrf(CsrfToken token) {
-			return token;
-		}
+	@GetMapping("/csrf")
+	public CsrfToken csrf(CsrfToken token) {
+		return token;
+	}
+
+	@GetMapping("/")
+	public String index() {
+		return "index.html"; // Vue.jsのビルドしたindex.htmlを返す
+	}
 }
