@@ -1,9 +1,0 @@
-service:
-  linux: java
-  windows: cmd
-  osx: java
-  docker: java
-  build: .
-  command: ./gradlew bootJar
-  ports:
-    - 8080
